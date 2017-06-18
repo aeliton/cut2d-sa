@@ -54,13 +54,13 @@ class SimulatedAnnealing:
                     solution = new_solution
                     success_iterator = success_iterator + 1
                     # painter_callback(self.__cost(solution), temperature)
-                    temperatures.append(temperature)
-                    costs.append(self.__cost(solution))
 
                 if success_iterator >= self.MAX_SUCESS:  # equilibrium
                     break
 
             print("%d %f %f %f %f" % (j, temperature, self.__cost(solution), solution[0], solution[1]))
+            temperatures.append(temperature)
+            costs.append(self.__cost(solution))
 
             temperature = self.ALPHA * temperature
 

@@ -19,7 +19,6 @@ class Painter:
         plt.show()
         print(temperature, ': ', cost)
 
-
     def redraw(self, temperature, cost):
         fig = plt.figure()
         ax = fig.add_subplot(1, 1, 1)
@@ -32,7 +31,7 @@ class Painter:
             ax.plot(temperature, cost)
             print(temperature, ': ', cost)
 
-        a = anim.FuncAnimation(fig, update, frames=100, repeat=False)
+        anim.FuncAnimation(fig, update, frames=100, repeat=False)
         plt.show()
 
     def drawOne(self, unit):
@@ -52,13 +51,13 @@ class Painter:
         counter_costs = list(range(0, len(costs)))
         plt.plot(counter_costs, costs, 'r', zorder=1, lw=1)
         plt.scatter(counter_costs, costs, s=1, zorder=2)
-        plt.title('Costs')
+        plt.title('Temperature')
 
         plt.subplot(212)
         counter_temperatures = list(range(0, len(temperatures)))
         plt.plot(counter_temperatures, temperatures, 'r', zorder=1, lw=1)
         plt.scatter(counter_temperatures, temperatures, s=1, zorder=2)
-        plt.tight_layout(h_pad = 2)
-        plt.title('Temperature')
+        plt.tight_layout(h_pad=2)
+        plt.title('Costs')
 
         plt.show()

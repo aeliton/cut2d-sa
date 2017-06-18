@@ -1,6 +1,5 @@
 import math
-import random
-from plotter import Painter
+from random import uniform, choice
 
 
 class SimulatedAnnealing:
@@ -21,11 +20,11 @@ class SimulatedAnnealing:
 
     @staticmethod
     def __randomize(solution):
-        random_value = random.randint(-6, 6)
-        return (solution[0], random_value) if random.choice([True, False]) else (random_value, solution[1])
+        random_value = uniform(-6, 6)
+        return (solution[0], random_value) if choice([True, False]) else (random_value, solution[1])
 
     def __diff_values(self, solution):
-        for i in range(0, self.MAX_INTERATIONS):
+        for i in range(0, 100):
             initial_solution = solution
             solution = self.__randomize(solution)
             diff_s = self.__diff_solution(initial_solution, solution)
@@ -47,18 +46,18 @@ class SimulatedAnnealing:
         costs = []
 
         for j in range(0, self.MAX_INTERATIONS):
-            for i in range(0, self.MAX_INTERATIONS):
+            for i in range(0, self.MAX_RANDOMIZE):
                 new_solution = self.__randomize(solution)
                 diff_s = self.__diff_solution(new_solution, solution)
 
-                if diff_s <= 0 or math.exp(-diff_s / temperature) > random.randint(0, 1):
+                if diff_s <= 0 or math.exp(-diff_s / temperature) > uniform(0, 1):
                     solution = new_solution
                     success_iterator = success_iterator + 1
                     # painter_callback(self.__cost(solution), temperature)
                     temperatures.append(temperature)
                     costs.append(self.__cost(solution))
 
-                if success_iterator >= self.MAX_SUCESS or i >= self.MAX_RANDOMIZE:  # equilibrium
+                if success_iterator >= self.MAX_SUCESS:  # equilibrium
                     break
 
             print("%d %f %f %f %f" % (j, temperature, self.__cost(solution), solution[0], solution[1]))

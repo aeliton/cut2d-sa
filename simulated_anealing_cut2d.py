@@ -5,8 +5,8 @@ from guillotine import Guillotine
 
 class SimulatedAnnealing:
     MAX_INTERATIONS = 100  # iterações
-    MAX_RANDOMIZE = 1000  # perturbações
-    MAX_SUCESS = 500000  # sucessos
+    MAX_RANDOMIZE = 100  # perturbações
+    MAX_SUCESS = 10000  # sucessos
     ALPHA = 0.8
 
     def __init__(self, w, h, rects):
@@ -31,7 +31,7 @@ class SimulatedAnnealing:
         return self.guillotine.cut()
 
     def __diff_values(self, solution):
-        for i in range(0, 1000):
+        for i in range(0, 100):
             initial_solution = solution
             solution = self.__randomize(solution)
             diff_s = self.__diff_solution(initial_solution, solution)

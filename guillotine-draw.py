@@ -27,12 +27,13 @@ print(cut)
 
 white = (255, 255, 255)
 black = (0, 0, 0)
+gray = (211, 211, 211)
 
 pygame.init()
 font = pygame.font.SysFont('Arial', 11)
 pygame.display.set_caption('Box Test')
 screen = pygame.display.set_mode((700, 700), 0, 32)
-screen.fill((white))
+screen.fill((gray))
 pygame.display.update()
 
 

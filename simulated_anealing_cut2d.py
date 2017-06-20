@@ -14,11 +14,12 @@ class SimulatedAnnealing:
 
     def __cut2d(self, cut):
         if cut is not None:
-            area = cut[2] * cut[3]
-            if cut[4] is not None:
-                area = area + self.__cut2d(cut[4])
-            if cut[5] is not None:
-                area = area + self.__cut2d(cut[5])
+            x, y, w, h, q, g1, g2 = cut
+            area = q * w * h
+            if g1 is not None:
+                area = area + self.__cut2d(g1)
+            if g2 is not None:
+                area = area + self.__cut2d(g2)
             return area
 
     def __cost(self, solution):

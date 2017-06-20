@@ -12,13 +12,15 @@ import sys
 # from pygame.locals import *
 # end - drawing stuff to be removed
 
-xs = np.random.random_integers(1, 10, 10)
-ys = np.random.random_integers(1, 10, 10)
+W, H = 60, 60
+
+xs = np.random.random_integers(1, W//2, 10)
+ys = np.random.random_integers(1, H//2, 10)
 rects = [(xs[i], ys[i]) for i in range(len(xs))]
 
-g = Guillotine((60, 60), rects)
+g = Guillotine((W, H), rects)
 p = Painter()
-s = SimulatedAnnealing(60, 60, rects)
+s = SimulatedAnnealing(W, H, rects)
 costs, temperatures, cut = SimulatedAnnealing.execute(s, g.cut(), p.update_line)
 
 print(cut)
@@ -33,12 +35,12 @@ pygame.init()
 font = pygame.font.SysFont('Arial', 11)
 pygame.display.set_caption('Box Test')
 screen = pygame.display.set_mode((700, 700), 0, 32)
-screen.fill((gray))
+screen.fill((white))
 pygame.display.update()
 
 
 def f(x):
-    return x * 10
+    return x * 600//((W+H)//2)
 
 
 def drawRect(x0, y0, x1, y1, text):
@@ -50,23 +52,25 @@ def drawRect(x0, y0, x1, y1, text):
 
 def drawGuillotine(g):
     if g is not None:
-        drawRect(g[0], g[1], g[2], g[3], str((g[2], g[3])))
-        drawGuillotine(g[4])
-        drawGuillotine(g[5])
+        x, y, w, h, q, g1, g2 = g
+        for i in range(q):
+            drawRect(i*w + x, y, w, h, str((w, h)))
+        drawGuillotine(g1)
+        drawGuillotine(g2)
 
 
 def area(cut):
     if cut is not None:
-        print(cut)
-        a = cut[2] * cut[3]
-        if cut[4] is not None:
-            a = a + area(cut[4])
-        if cut[5] is not None:
-            a = a + area(cut[5])
+        x, y, w, h, q, g1, g2 = cut
+        a = q * w * h
+        if g1 is not None:
+            a = a + area(g1)
+        if g2 is not None:
+            a = a + area(g2)
         return a
 
 
-drawRect(0, 0, 60, 60, '')
+drawRect(0, 0, W, H, '')
 drawGuillotine(cut)
 
 print(area(cut))

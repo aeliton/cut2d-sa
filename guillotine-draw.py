@@ -12,11 +12,15 @@ import sys
 # from pygame.locals import *
 # end - drawing stuff to be removed
 
-W, H = 60, 60
+lines = [line.rstrip('\n') for line in open('input/cut2.txt')]
+
+rects = list(map(lambda line: (int(line.split()[0]), int(line.split()[1])), lines[1:]))
+
+W, H = rects[2][0], rects[2][1]
 
 xs = np.random.random_integers(1, W//2, 10)
 ys = np.random.random_integers(1, H//2, 10)
-rects = [(xs[i], ys[i]) for i in range(len(xs))]
+#rects = [(xs[i], ys[i]) for i in range(len(xs))]
 
 g = Guillotine((W, H), rects)
 p = Painter()

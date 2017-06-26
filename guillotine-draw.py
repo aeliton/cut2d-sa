@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-import numpy as np
+# import numpy as np
 from simulated_anealing_cut2d import SimulatedAnnealing
 from guillotine import Guillotine
 from plotter import Painter
@@ -12,18 +12,27 @@ import sys
 # from pygame.locals import *
 # end - drawing stuff to be removed
 
-W, H = 60, 60
+# W, H = 10, 10
+# xs = np.random.random_integers(1, W//3, 30)
+# ys = np.random.random_integers(1, H//3, 30)
+# rects = [(xs[i], ys[i]) for i in range(len(xs))]
 
-xs = np.random.random_integers(1, W//2, 10)
-ys = np.random.random_integers(1, H//2, 10)
-rects = [(xs[i], ys[i]) for i in range(len(xs))]
+W, H, n, a, b, c, d, e = [int(s) for s in input().split(" ")]
+
+rects = []
+
+for i in range(0, int(n)):
+    w, h, a, b, c = [int(s) for s in input().split(" ")]
+    rects.append((w, h))
+
+print(rects)
+print("------------------------")
 
 g = Guillotine((W, H), rects)
 p = Painter()
 s = SimulatedAnnealing(W, H, rects)
-costs, temperatures, cut = SimulatedAnnealing.execute(s, g.cut(), p.update_line)
-
-print(cut)
+cut = g.cut()
+# costs, temperatures, cut = SimulatedAnnealing.execute(s, g.cut(), p.update_line)
 
 # start - drawing stuff to be removed
 
@@ -51,12 +60,18 @@ def drawRect(x0, y0, x1, y1, text):
 
 
 def drawGuillotine(g):
+    screen.fill((white))
+    __drawGuillotine(g)
+
+
+def __drawGuillotine(g):
+    drawRect(0, 0, W, H, '')
     if g is not None:
         x, y, w, h, q, g1, g2 = g
         for i in range(q):
             drawRect(i*w + x, y, w, h, str((w, h)))
-        drawGuillotine(g1)
-        drawGuillotine(g2)
+        __drawGuillotine(g1)
+        __drawGuillotine(g2)
 
 
 def area(cut):
@@ -70,9 +85,13 @@ def area(cut):
         return a
 
 
-drawRect(0, 0, W, H, '')
-drawGuillotine(cut)
+cuts = []
 
+cuts.append(cut)
+cut_pos = 0
+
+print(cut)
+drawGuillotine(cut)
 print(area(cut))
 
 while True:
@@ -80,4 +99,20 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+        elif event.type == pygame.KEYUP:
+            if event.key == pygame.K_RIGHT:
+                cut_pos += 1
+                if cut_pos == len(cuts):
+                    cut = g.change(cut)
+                    cuts.append(cut)
+                else:
+                    cut = cuts[cut_pos]
+                print("%d %s" % (cut_pos, cut))
+                drawGuillotine(cut)
+            elif event.key == pygame.K_LEFT:
+                cut_pos = cut_pos - 1 if cut_pos > 0 else len(cuts) - 1
+                cut = cuts[cut_pos]
+                print("%d %s" % (cut_pos, cut))
+                drawGuillotine(cut)
+
 # end - drawing stuff to be removed

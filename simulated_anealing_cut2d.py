@@ -53,7 +53,9 @@ class SimulatedAnnealing:
         temperatures = []
         costs = []
 
+        no_change_counter = 0
         for j in range(0, self.MAX_INTERATIONS):
+            old_solution = solution
             for i in range(0, self.MAX_RANDOMIZE):
                 new_solution = self.__randomize(solution)
                 diff_s = self.__diff_solution(new_solution, solution)
@@ -69,14 +71,19 @@ class SimulatedAnnealing:
                 if success_iterator >= self.MAX_SUCESS:  # equilibrium
                     break
 
-            print("%d %f %d" % (j, temperature, self.__cost(solution)))
+            if self.__cost(old_solution) == self.__cost(solution):
+                no_change_counter += 1
+            else:
+                no_change_counter = 0
+
+            print("%d %f %d %d" % (j, temperature, self.__cost(solution), no_change_counter))
 
             temperatures.append(temperature)
             costs.append(self.__cost(solution))
 
             temperature = self.ALPHA * temperature
 
-            if success_iterator == 0:  # stop condition
+            if success_iterator == 0 or 0.1 * self.MAX_INTERATIONS <= no_change_counter:  # stop condition
                 break
 
         return temperatures, costs, solution

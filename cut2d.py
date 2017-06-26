@@ -13,6 +13,7 @@ rects = [(xs[i], ys[i]) for i in range(len(xs))]
 g = Guillotine((60, 60), rects)
 p = Painter()
 s = SimulatedAnnealing(60, 60, rects)
-costs, temperatures, cut = SimulatedAnnealing.execute(s, g.cut(), p.update_line)
+initial = s.initial_solution()
+costs, temperatures, cut = SimulatedAnnealing.execute(s, initial, p.update_line)
 
 p.draw(costs, temperatures)

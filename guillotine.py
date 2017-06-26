@@ -11,27 +11,40 @@ class Guillotine:
         rects = rects + [(x[1], x[0]) for x in rects if x[0] != x[1]]
         self.rects = sorted(rects, key=cmp_to_key(self.__cmp))
 
-    def cut(self):
+    def cut(self, pieces):
         # cut = self.__cut(0, 0, self.rect[0], self.rect[1])
-        cut = self.__naive_cut(0, 0, self.w, self.h)
+        cut, tail = self.__stupid_cut(0, 0, self.w, self.h, pieces)
         self.cuts.append(cut)
         return cut
+
+    def pieces(self, cut):
+        x, y, w, h, q, gr, gu = cut
+        pieces = [(w, h)]
+        if gr is not None:
+            pieces += self.pieces(gr)
+
+        if gu is not None:
+            pieces += self.pieces(gu)
+
+        return pieces
 
     # def __cut(self, x0, y0, x1, y1):
         # w, h = x1 - x0, y1 - y0
         # rects = map(lambda r: (r, random.randint(0, min(w//r[0], h//r[1]))), rects)
+    def change_cut(self, cut):
+        pieces = self.pieces(cut)
+        change_index = random.randint(0, len(pieces)-1)
+        pieces.insert(change_index, random.choice(self.rects))
+
+        return self.cut(pieces)
 
     def change(self, cut):
-        x, y, w, h, q, gr, gu = cut
-        pieces = self.__position_slack(cut)
+        # pieces = self.pieces(cut)
+        pieces = cut
         change_index = random.randint(0, len(pieces)-1)
+        pieces.insert(change_index, random.choice(self.rects))
 
-        pos, slack = pieces[change_index]
-
-        new, q = random.choice(self.__pieces(slack[0], slack[1]))
-
-        cut = self.__change_pos(cut, pos[0], pos[1], new)
-        return cut
+        return self.pieces(self.cut(pieces))
 
     def __change_pos(self, cut, x0, y0, piece):
         x, y, w, h, q, gr, gu = cut
@@ -62,6 +75,17 @@ class Guillotine:
             sh += self.h - (y+h)
 
         return [((x, y), (sw, sh))] + pieces
+
+    def __stupid_cut(self, x0, y0, x1, y1, pieces):
+        w, h = x1 - x0, y1 - y0
+        if len(pieces) > 0:
+            p, *tail = pieces
+            pw, ph = p
+            if pw <= w and ph <= h:
+                right_cuts, tail = self.__stupid_cut(x0+pw, y0, x1, y0 + ph, tail)
+                above_cuts, tail = self.__stupid_cut(x0, y0+ph, x1, y1, tail)
+                return ((x0, y0, pw, ph, 1, right_cuts, above_cuts), tail)
+        return (None, pieces)
 
     def __naive_cut(self, x0, y0, x1, y1):
         w, h = x1 - x0, y1 - y0

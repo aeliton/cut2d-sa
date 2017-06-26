@@ -31,7 +31,8 @@ print("------------------------")
 g = Guillotine((W, H), rects)
 p = Painter()
 s = SimulatedAnnealing(W, H, rects)
-cut = g.cut()
+pieces = s.initial_solution()
+cut = g.cut(pieces)
 # costs, temperatures, cut = SimulatedAnnealing.execute(s, g.cut(), p.update_line)
 
 # start - drawing stuff to be removed
@@ -61,11 +62,11 @@ def drawRect(x0, y0, x1, y1, text):
 
 def drawGuillotine(g):
     screen.fill((white))
+    drawRect(0, 0, W, H, '')
     __drawGuillotine(g)
 
 
 def __drawGuillotine(g):
-    drawRect(0, 0, W, H, '')
     if g is not None:
         x, y, w, h, q, g1, g2 = g
         for i in range(q):
@@ -103,7 +104,7 @@ while True:
             if event.key == pygame.K_RIGHT:
                 cut_pos += 1
                 if cut_pos == len(cuts):
-                    cut = g.change(cut)
+                    cut = g.change_cut(cut)
                     cuts.append(cut)
                 else:
                     cut = cuts[cut_pos]

@@ -1,5 +1,5 @@
 import math
-from random import uniform
+from random import uniform, choice
 from guillotine import Guillotine
 
 
@@ -10,17 +10,13 @@ class SimulatedAnnealing:
     ALPHA = 0.8
 
     def __init__(self, w, h, rects):
+        self.w = w
+        self.h = h
+        self.rects = rects
         self.guillotine = Guillotine((w, h), rects)
 
-    def __cut2d(self, cut):
-        if cut is not None:
-            x, y, w, h, q, g1, g2 = cut
-            area = q * w * h
-            if g1 is not None:
-                area = area + self.__cut2d(g1)
-            if g2 is not None:
-                area = area + self.__cut2d(g2)
-            return area
+    def __cut2d(self, pieces):
+        return sum([x[0]*x[1] for x in pieces])
 
     def __cost(self, solution):
         return self.__cut2d(solution)
@@ -29,12 +25,24 @@ class SimulatedAnnealing:
         return self.__cost(solutionA) - self.__cost(solutionB)
 
     def __randomize(self, solution):
-        return self.guillotine.cut()
+        return self.guillotine.change(solution)
+
+    def initial_solution(self):
+        area = 0
+        pieces = []
+        while area < self.w * self.h:
+            p = choice(self.rects)
+            pieces.append(p)
+            area += p[0] * p[1]
+
+        cut = self.guillotine.cut(pieces)
+
+        return self.guillotine.pieces(cut)
 
     def __diff_values(self, solution):
         for i in range(0, 100):
             initial_solution = solution
-            solution = self.__randomize(solution)
+            solution = self.initial_solution()
             diff_s = self.__diff_solution(initial_solution, solution)
 
             if diff_s > 0:

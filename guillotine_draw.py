@@ -30,9 +30,10 @@ class PainterGui:
         pygame.image.save(self.screen, file_path)
 
     def drawRect(self, x0, y0, x1, y1, text):
-        pygame.draw.rect(self.screen, self.black, (self.f(x0), self.f(y0), self.f(x1), self.f(y1)), 1)
+        off = 50
+        pygame.draw.rect(self.screen, self.black, (off + self.f(x0), off + self.f(y0), self.f(x1), self.f(y1)), 1)
         pygame.display.update()
-        self.screen.blit(self.font.render(text, True, (255, 0, 0)), (self.f(x0) + 1, self.f(y0) + 1))
+        self.screen.blit(self.font.render(text, True, (255, 0, 0)), (off + self.f(x0) + 1, off + self.f(y0) + 1))
         pygame.display.update()
 
     def f(self, x):

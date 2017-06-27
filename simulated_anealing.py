@@ -5,7 +5,7 @@ from random import uniform, choice
 class SimulatedAnnealing:
     MAX_INTERATIONS = 100  # iterações
     MAX_RANDOMIZE = 10000  # perturbações
-    MAX_SUCESS = 1500000  # sucessos
+    MAX_SUCESS = 200000  # sucessos
     ALPHA = 0.8
 
     @staticmethod

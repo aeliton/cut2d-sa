@@ -5,8 +5,8 @@ from guillotine import Guillotine
 
 class SimulatedAnnealing:
     MAX_INTERATIONS = 100  # iterações
-    MAX_RANDOMIZE = 100  # perturbações
-    MAX_SUCESS = 10000  # sucessos
+    MAX_RANDOMIZE = 1000  # perturbações
+    MAX_SUCESS = 1000000  # sucessos
     ALPHA = 0.8
 
     def __init__(self, w, h, rects):
@@ -60,10 +60,10 @@ class SimulatedAnnealing:
         success_iterator = 0
         temperatures = []
         costs = []
+        solutions = []
 
         no_change_counter = 0
         for j in range(0, self.MAX_INTERATIONS):
-            old_solution = solution
             for i in range(0, self.MAX_RANDOMIZE):
                 new_solution = self.__randomize(solution)
                 diff_s = self.__diff_solution(new_solution, solution)
@@ -79,7 +79,8 @@ class SimulatedAnnealing:
                 if success_iterator >= self.MAX_SUCESS:  # equilibrium
                     break
 
-            if self.__cost(old_solution) == self.__cost(solution):
+            solutions.insert(j, self.__cost(solution))
+            if j > 0 and solutions[j] == solutions[j-1]:
                 no_change_counter += 1
             else:
                 no_change_counter = 0
@@ -91,7 +92,7 @@ class SimulatedAnnealing:
 
             temperature = self.ALPHA * temperature
 
-            if success_iterator == 0 or 0.1 * self.MAX_INTERATIONS <= no_change_counter:  # stop condition
+            if success_iterator == 0 or 0.2 * self.MAX_INTERATIONS <= no_change_counter:  # stop condition
                 break
 
         return temperatures, costs, solution

@@ -8,6 +8,7 @@ class Guillotine:
     def __init__(self, rect, rects):
         self.cuts = []
         self.w, self.h = rect
+        print(self.w * self.h)
         rects = rects + [(x[1], x[0]) for x in rects if x[0] != x[1]]
         self.rects = sorted(rects, key=cmp_to_key(self.__cmp))
 
@@ -33,17 +34,13 @@ class Guillotine:
         # rects = map(lambda r: (r, random.randint(0, min(w//r[0], h//r[1]))), rects)
     def change_cut(self, cut):
         pieces = self.pieces(cut)
+
+        return self.cut(self.change(pieces))
+
+    def change(self, pieces):
         change_index = random.randint(0, len(pieces)-1)
-        pieces.insert(change_index, random.choice(self.rects))
-
-        return self.cut(pieces)
-
-    def change(self, cut):
-        # pieces = self.pieces(cut)
-        pieces = cut
-        change_index = random.randint(0, len(pieces)-1)
-        pieces.insert(change_index, random.choice(self.rects))
-
+        new = random.choice(self.rects)
+        pieces = pieces[:change_index] + [new] + pieces[change_index:]
         return self.pieces(self.cut(pieces))
 
     def __change_pos(self, cut, x0, y0, piece):

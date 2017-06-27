@@ -20,6 +20,7 @@
 % out into a separate .sty file (which could lead to the loss of some
 % information when we convert the file to other formats).  Instead, keep
 % them in the preamble of your main LaTeX source file.
+\usepackage[utf8]{inputenc}
 
 
 % The following parameters seem to provide a reasonable page setup.
@@ -41,7 +42,7 @@
 % If your reference list includes text notes as well as references,
 % include the following line; otherwise, comment it out.
 
-\renewcommand\refname{References and Notes}
+\renewcommand\refname{Referências e Notas}
 
 % The following lines set up an environment for the last note in the
 % reference list, which commonly includes acknowledgments of funding,
@@ -63,8 +64,7 @@
 
 % Include your paper's title here
 
-\title{A simple {\it Science\/} Template} 
-
+\title{Aplicação de {\it Simulated Anealing\/} Para o Problema de Corte 2D Guilhotinado}
 
 % Place the author information here.  Please hand-code the contact
 % information and notecalls; do *not* use \footnote commands.  Let the
@@ -73,13 +73,12 @@
 % settings shown here.
 
 \author
-{John Smith,$^{1\ast}$ Jane Doe,$^{1}$ Joe Scientist$^{2}$\\
+{Aeliton G. Silva,$^{1}$ Alano Martins,$^{1}$\\
 \\
-\normalsize{$^{1}$Department of Chemistry, University of Wherever,}\\
-\normalsize{An Unknown Address, Wherever, ST 00000, USA}\\
-\normalsize{$^{2}$Another Unknown Address, Palookaville, ST 99999, USA}\\
+\normalsize{$^{1}$Mestrado Academico em Ciência da Computação, Universidade Estadual do Ceará,}\\
+\normalsize{Av. Dr. Silas Munguba, 1700, Campus do Itaperi, Fortaleza-CE, Brasil}\\
 \\
-\normalsize{$^\ast$To whom correspondence should be addressed; E-mail:  jsmith@wherever.edu.}
+%\normalsize{$^\ast$To whom correspondence should be addressed; E-mail:  jsmith@wherever.edu.}
 }
 
 % Include the date command, but leave its argument blank.
@@ -107,15 +106,13 @@
 % Place your abstract within the special {sciabstract} environment.
 
 \begin{sciabstract}
-  This document presents a number of hints about how to set up your
-  {\it Science\/} paper in \LaTeX\ .  We provide a template file,
-  \texttt{scifile.tex}, that you can use to set up the \LaTeX\ source
-  for your article.  An example of the style is the special
-  \texttt{\{sciabstract\}} environment used to set up the abstract you
-  see here.
+    Este documento apresenta a aplicação da metaheurística \textit{Simulated
+    Anealing} ao problema de Corte Bidmensional Guilhotinado. Provemos os
+    resultados da execução de 10 instâncias, cada uma executada 3 vezes e
+    selecionada a melhor delas para apresentação em uma tabela com todos os
+    melhores resultados obtidos. Apresentamos também os métodos mais
+    importantes da implementação, em python, de nossa solução.
 \end{sciabstract}
-
-
 
 % In setting up this template for *Science* papers, we've used both
 % the \section* command and the \paragraph* command for topical
@@ -127,7 +124,7 @@
 % choice.  Either way, use the asterisk (*) modifier, as shown, to
 % suppress numbering.
 
-\section*{Introduction}
+\section*{Introdução}
 
 In this file, we present some tips and sample mark-up to assure your
 \LaTeX\ file of the smoothest possible journey from review manuscript
@@ -150,7 +147,7 @@ should be eminently reviewable, and yet will allow your paper to
 proceed quickly into our production flow upon acceptance \cite{use2e}.
 
 
-\section*{Formatting Citations}
+\section*{Definições}
 
 Citations can be handled in one of three ways.  The most
 straightforward (albeit labor-intensive) would be to hardwire your
@@ -239,7 +236,8 @@ notecalls.  In particular, observe the following requirements:
 to the omission of the references in an accepted paper when the source
 file is translated to Word via HTML.
 
-\section*{Handling Math, Tables, and Figures}
+
+\section*{Perturbação e Vizinhança}
 
 Following are a few things to keep in mind in coding equations,
 tables, and figures for submission to {\it Science}.
@@ -293,7 +291,7 @@ the figures should be uploaded separately according to the Art
 Department's instructions.
 
 
-\section*{What to Send In}
+\section*{Meta-Heurística \textit{Simulated Anealing}}
 
 What you should send to {\it Science\/} will depend on the stage your manuscript is in:
 
@@ -336,6 +334,7 @@ What you should send to {\it Science\/} will depend on the stage your manuscript
 % was included to format the reference numbers according to *Science*
 % style.
 
+\section*{Execução dos Testes}
 
 \bibliography{scibib}
 

@@ -5,9 +5,8 @@ from simulated_anealing_cut2d import SimulatedAnnealing
 from plotter import Painter
 from guillotine_draw import PainterGui
 
-file = '/Users/thalita/Alano/Workspace/images/result_teste'
-cut = '/cut.png'
-plot = '/plot.png'
+cut_file_path = 'outputs/cut.png'
+plot_file_path = 'outputs/plot.png'
 
 W, H, n, a, b, c, d, e = [int(s) for s in input().split(" ")]
 
@@ -28,6 +27,7 @@ cut = g.cut(solution)
 
 gui = PainterGui()
 gui.drawGuillotine(cut)
-gui.save('/Users/thalita/Alano/Workspace/images/result_teste.png')
+gui.save(cut_file_path)
+gui.end()
 
-p.draw(costs, temperatures, '/Users/thalita/Alano/Workspace/images/result_plot.png')
+p.draw(costs, temperatures, plot_file_path)

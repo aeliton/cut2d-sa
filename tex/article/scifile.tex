@@ -9,6 +9,7 @@
 % reference calls and reference-list numbers.
 
 \usepackage{scicite}
+\usepackage[pdftex]{graphicx}
 
 % Use times if you have the font installed; otherwise, comment out the
 % following line.
@@ -126,34 +127,24 @@
 
 \section*{Introdução}
 
-In this file, we present some tips and sample mark-up to assure your
-\LaTeX\ file of the smoothest possible journey from review manuscript
-to published {\it Science\/} paper.  We focus here particularly on
-issues related to style files, citation, and math, tables, and
-figures, as those tend to be the biggest sticking points.  Please use
-the source file for this document, \texttt{scifile.tex}, as a template
-for your manuscript, cutting and pasting your content into the file at
-the appropriate places.
-
-{\it Science\/}'s publication workflow relies on Microsoft Word.  To
-translate \LaTeX\ files into Word, we use an intermediate MS-DOS
-routine \cite{tth} that converts the \TeX\ source into HTML\@.  The
-routine is generally robust, but it works best if the source document
-is clean \LaTeX\ without a significant freight of local macros or
-\texttt{.sty} files.  Use of the source file \texttt{scifile.tex} as a
-template, and calling {\it only\/} the \texttt{.sty} and \texttt{.bst}
-files specifically mentioned here, will generate a manuscript that
-should be eminently reviewable, and yet will allow your paper to
-proceed quickly into our production flow upon acceptance \cite{use2e}.
-
+O corte guilhotinado 2D para objetos retangulares é um desafio para otimização do aproveitamento dessas peças, reduzindo-as em objetos menores com o maior aproveitamento, ou seja, menor perda de materiais restantes após os cortes. 
+Apesar do facil entendimento da problemática, o corte guilhotinável 2D é considerado um problema \textit{NP-HARD}, o qual não há algoritmos deterministicos para resolução em tempo hábil para instâncias de médio ou grande porte.
+Esse problema é dado por uma grande variedade de arranjos possíveis, tornando inviável uso de métodos exatos. Assim os métodos heuristicos e meta heuristicos são uma boa solução.
+Esse trabalho visa demonstrar uma implementação para o problema de corte guilhotinado 2D utilizando a meta heuristica \textit{Simulated Annealing}. 
 
 \section*{Definições}
-
-Citations can be handled in one of three ways.  The most
-straightforward (albeit labor-intensive) would be to hardwire your
-citations into your \LaTeX\ source, as you would if you were using an
-ordinary word processor.  Thus, your code might look something like
-this:
+	
+	Diversos processos produtivos passam por uma atividade de corte em diversos tipos de materiais, afim de reduzir uma peça maior em várias outras menores com a finalidade de atender demanda por itens especificos, porém reduzindo os disperdicios do material original. 
+	Se um corte numa área retangular resulta em outros dois retangulos, esse problema é considerado guilhotinável ortogonal e quando isso não ocorre, guilhotinável não ortogonal. Para restringir o problema, os cortes devem ser realizados paralelos ao lado dos retângulos como demonstrado na figura:
+	
+	\begin{figure}[h]
+    \centering
+    \includegraphics[width=15cm, height=5cm]{imagens/guilhotine}
+    \caption{Exemplos de cortes}
+  \end{figure}
+	
+	O problema abordado nesse trabalho é para cortes em peças limitadas pelo tamanho do objeto origianal e maior, realizando apenas cortes guilhotináveis e não estagiados, esse problema também é conhecido como  Problema de Corte Bidimensional Guilhotinado e Restrito.
+	
 
 
 \begin{quote}

@@ -5,8 +5,8 @@ from simulated_anealing_cut2d import SimulatedAnnealing
 from plotter import Painter
 from guillotine_draw import PainterGui
 
-cut_file_path = 'cut.png'
-plot_file_path = 'plot.png'
+cut_file_path = 'outputs/cut.png'
+plot_file_path = 'outputs/plot.png'
 
 W, H, n, a, b, c, d, e = [int(s) for s in input().split(" ")]
 

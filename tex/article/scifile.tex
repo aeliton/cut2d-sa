@@ -307,57 +307,14 @@ Essa implementação é vista no código fonte em:
 A temperatura inicia com um valor alto, mas após uma quantidade fixa de interações ($MAX\_INTERATIONS$) vai gradativamente caindo em razão de um fator, ALPHA, dessa forma o algoritmo tende a escapar de ficar preso em mínimos locais. Com a aproximação da temperatura a 0, o algoritmo se comporta como método de descida, já que a probabilidade de aceitar funções que piorem é muito baixa.
 O algoritmo encontra sua condição de parada se a temperatura chegar próxima a 0 ou nenhuma nova solução aceita após várias interações, ou seja, o sistema está estável.
 
+
 \section*{Execução dos Testes}
 
-\include{results}
+	\include{results}
 
 \bibliography{scibib}
 
 \bibliographystyle{Science}
-
-
-
-% Following is a new environment, {scilastnote}, that's defined in the
-% preamble and that allows authors to add a reference at the end of the
-% list that's not signaled in the text; such references are used in
-% *Science* for acknowledgments of funding, help, etc.
-
-\begin{scilastnote}
-\item We've included in the template file \texttt{scifile.tex} a new
-environment, \texttt{\{scilastnote\}}, that generates a numbered final
-citation without a corresponding signal in the text.  This environment
-can be used to generate a final numbered reference containing
-acknowledgments, sources of funding, and the like, per {\it Science\/}
-style.
-\end{scilastnote}
-
-
-
-
-% For your review copy (i.e., the file you initially send in for
-% evaluation), you can use the {figure} environment and the
-% \includegraphics command to stream your figures into the text, placing
-% all figures at the end.  For the final, revised manuscript for
-% acceptance and production, however, PostScript or other graphics
-% should not be streamed into your compliled file.  Instead, set
-% captions as simple paragraphs (with a \noindent tag), setting them
-% off from the rest of the text with a \clearpage as shown  below, and
-% submit figures as separate files according to the Art Department's
-% instructions.
-
-
-\clearpage
-
-\noindent {\bf Fig. 1.} Please do not use figure environments to set
-up your figures in the final (post-peer-review) draft, do not include graphics in your
-source code, and do not cite figures in the text using \LaTeX\
-\verb+\ref+ commands.  Instead, simply refer to the figure numbers in
-the text per {\it Science\/} style, and include the list of captions at
-the end of the document, coded as ordinary paragraphs as shown in the
-\texttt{scifile.tex} template file.  Your actual figure files should
-be submitted separately.
-
-
 
 \end{document}
 

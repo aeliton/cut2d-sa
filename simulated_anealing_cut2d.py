@@ -85,7 +85,7 @@ class SimulatedAnnealing:
             else:
                 no_change_counter = 0
 
-            print("%d %f %d %d" % (j, temperature, self.__cost(solution), no_change_counter))
+            # print("%d %f %d %d" % (j, temperature, self.__cost(solution), no_change_counter))
 
             temperatures.append(temperature)
             costs.append(self.__cost(solution))

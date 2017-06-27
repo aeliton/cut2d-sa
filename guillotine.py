@@ -8,7 +8,6 @@ class Guillotine:
     def __init__(self, rect, rects):
         self.cuts = []
         self.w, self.h = rect
-        print(self.w * self.h)
         rects = rects + [(x[1], x[0]) for x in rects if x[0] != x[1]]
         self.rects = sorted(rects, key=cmp_to_key(self.__cmp))
 

@@ -32,4 +32,4 @@ gui.end()
 
 p.draw(costs, temperatures, plot_file_path)
 
-print(100*(((W*H) - gui.area(cut))/(W*H)))
+print("%.2f\\%% de %dx%d (%d)" % (100*(((W*H) - gui.area(cut))/(W*H)), W, H, W*H))

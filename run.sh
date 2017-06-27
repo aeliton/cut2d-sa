@@ -12,11 +12,13 @@ for file in $(ls input/* | sed 's/input\///;s/.txt$//'); do
     for i in 1 2 3; do
         mkdir -p $FOLDER/$i
         pushd "${FOLDER}/${i}"
-            PERCENT=$(../../../cut2d.py < ../../../input/"${file}.txt")
+            DATA=$(../../../cut2d.py < ../../../input/"${file}.txt")
+            PERCENT=$(echo $DATA| sed 's/\\.*//')
             echo $PERCENT
             if [ "$(echo $PERCENT'<'$LOW | bc -l)" -eq "1" ]; then
                 ITERATION=$i
                 LOW=$PERCENT
+                LOW_DATA=$DATA
             fi
         popd
     done
@@ -34,7 +36,7 @@ echo "
   \\includegraphics[width=1\\linewidth]{results/$file/$ITERATION/cut}
   \\label{fig:sub2}
 \\end{subfigure}
-\\caption{Instancia $file.txt, $LOW\%}
+\\caption{Instancia $file.txt, $LOW_DATA}
 \\label{fig:test}
 \\end{figure}
 " >> tex/article/results.tex

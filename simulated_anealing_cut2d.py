@@ -42,9 +42,14 @@ class SimulatedAnnealing:
         return self.guillotine.pieces(cut)
 
     def __diff_values(self, solution):
+        self.start = solution
         for i in range(0, 100):
             initial_solution = solution
             solution = self.initial_solution()
+
+            if self.__cost(solution) > self.__cost(self.start):
+                self.start = solution
+
             diff_s = self.__diff_solution(initial_solution, solution)
 
             if diff_s > 0:
@@ -62,12 +67,12 @@ class SimulatedAnnealing:
 
     def execute(self, start):
         t0 = time.time()
-        solution = start
-        temperature = self.__initial_temperature(solution)
+        temperature = self.__initial_temperature(start)
         success_iterator = 0
         temperatures = []
         costs = []
         solutions = []
+        solution = self.start
 
         no_change_counter = 0
         for j in range(0, self.MAX_INTERATIONS):
@@ -100,6 +105,6 @@ class SimulatedAnnealing:
             if success_iterator == 0 or 0.2 * self.MAX_INTERATIONS <= no_change_counter:  # stop condition
                 break
 
-            average = sum(solutions)/len(solution)
+            average = sum(solutions)/len(solutions)
 
         return temperatures, costs, solution, (self.__waste(solution), len(self.rects), "{0}x{1}".format(self.w, self.h), self.__cost(start), average, self.__cost(solution), time.time() - t0, "{0}".format(dict(Counter(solution))))

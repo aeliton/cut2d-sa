@@ -35,7 +35,7 @@ for file in $(ls input/* | sed 's/input\///;s/.txt$//'); do
             if [ "$(echo $PERCENT'<'$LOW | bc -l)" -eq "1" ]; then
                 ITERATION=$i
                 LOW=$PERCENT
-                LOW_DATA="Solução: $BEST, disperdício de $PERCENT\% de $AREA"
+                LOW_DATA="Solução: $BEST, desperdício de $PERCENT\% de $AREA"
                 TABLE="        $COUNT & $file & $N & $AREA & $INITIAL & $AVERAGE & $BEST & $PERCENT & $TIME \\\\ \\hline"
             fi
         popd

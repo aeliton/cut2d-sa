@@ -1,6 +1,7 @@
 import math
 from random import uniform, choice
 from guillotine import Guillotine
+import time
 
 
 class SimulatedAnnealing:
@@ -54,7 +55,12 @@ class SimulatedAnnealing:
         l = list(diffs)
         return SECRET * (sum(l) / len(l))
 
+    def __waste(self, solution):
+        total = self.w * self.h
+        return ((total - self.__cost(solution))/total)*100
+
     def execute(self, start):
+        t0 = time.time()
         solution = start
         temperature = self.__initial_temperature(solution)
         success_iterator = 0
@@ -93,4 +99,6 @@ class SimulatedAnnealing:
             if success_iterator == 0 or 0.2 * self.MAX_INTERATIONS <= no_change_counter:  # stop condition
                 break
 
-        return temperatures, costs, solution
+            average = sum(solutions)/len(solution)
+
+        return temperatures, costs, solution, (self.__waste(solution), len(self.rects), "{0}x{1}".format(self.w, self.h), self.__cost(start), average, self.__cost(solution), time.time() - t0)

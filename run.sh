@@ -3,9 +3,17 @@
 mkdir -p results
 
 rm -rf tex/article/results.tex
+echo "
+\\begin{center}
+    \\begin{tabular}{ |c|c|c|c|c|c|c|c|c|}
+    \\hline
+        \\# & Instancia & \\# de Itens & Tam. Placa & S. Inicial & S. Média & S. Melhor & Desperdício & Tempo (s) \\\\ \\hline
+" > tex/article/table.tex
 
+COUNT=0
 for file in $(ls input/* | sed 's/input\///;s/.txt$//'); do
     ITERATION=0
+    COUNT=$(echo $COUNT + 1 | bc) 
     LOW=100
     FOLDER="results/$file"
     rm -rf $FOLDER
@@ -13,15 +21,24 @@ for file in $(ls input/* | sed 's/input\///;s/.txt$//'); do
         mkdir -p $FOLDER/$i
         pushd "${FOLDER}/${i}"
             DATA=$(../../../cut2d.py < ../../../input/"${file}.txt")
+            echo $DATA
             PERCENT=$(echo $DATA| sed 's/\\.*//')
+            N=$(echo $DATA| cut -d' ' -f 2)
+            AREA=$(echo $DATA| cut -d' ' -f 3)
+            INITIAL=$(echo $DATA| cut -d' ' -f 4)
+            AVERAGE=$(echo $DATA| cut -d' ' -f 5)
+            BEST=$(echo $DATA| cut -d' ' -f 6)
+            TIME=$(echo $DATA| cut -d' ' -f 7)
             echo $PERCENT
             if [ "$(echo $PERCENT'<'$LOW | bc -l)" -eq "1" ]; then
                 ITERATION=$i
                 LOW=$PERCENT
                 LOW_DATA=$DATA
+                TABLE="$COUNT & $file & $N & $AREA & $INITIAL & $AVERAGE & $BEST & $PERCENT & $TIME \\\\ \\hline"
             fi
         popd
     done
+    echo $TABLE >> tex/article/table.tex
 
 echo "
 \\begin{figure}
@@ -44,3 +61,8 @@ done
 
 rm -rf tex/article/results
 mv results tex/article/results
+
+echo "
+    \end{tabular}
+\end{center}
+" >> tex/article/table.tex

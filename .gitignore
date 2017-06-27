@@ -103,3 +103,24 @@ ENV/
 .idea/
 *.swp
 ent*
+*.aux
+
+*.nav
+*.log
+
+*.out
+
+*.snm
+
+# latex
+*.toc
+*.pdf
+*.bbl
+*.blg
+*.brf
+*.dvi
+*.idx
+*.lof
+*.lot
+*.ps
+

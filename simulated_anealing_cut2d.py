@@ -4,7 +4,7 @@ from guillotine import Guillotine
 
 
 class SimulatedAnnealing:
-    MAX_INTERATIONS = 100  # iterações
+    MAX_INTERATIONS = 400  # iterações
     MAX_RANDOMIZE = 1000  # perturbações
     MAX_SUCESS = 1000000  # sucessos
     ALPHA = 0.8

@@ -1,6 +1,6 @@
 all:
 	pdflatex scifile.tex
-	bibtex scifile
+#	bibtex scifile
 	pdflatex scifile.tex
 	pdflatex scifile.tex
 	evince scifile.pdf

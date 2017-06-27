@@ -43,15 +43,30 @@
 
 % Python style for highlighting
 \newcommand\pythonstyle{\lstset{
-language=Python,
-basicstyle=\ttm,
-otherkeywords={self},             % Add keywords here
-keywordstyle=\ttb\color{deepblue},
-emph={MyClass,__init__},          % Custom highlighting
-emphstyle=\ttb\color{deepred},    % Custom highlighting style
-stringstyle=\color{deepgreen},
-frame=tb,                         % Any extra options here
-showstringspaces=false            % 
+  language=Python,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\small\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{green},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+%language=Python,
+%%basicstyle=\ttm,
+%basicstyle={\scriptsize\ttfamily},
+%otherkeywords={self},             % Add keywords here
+%keywordstyle=\ttb\color{deepblue},
+%emph={MyClass,__init__},          % Custom highlighting
+%emphstyle=\ttb\color{deepred},    % Custom highlighting style
+%stringstyle=\color{deepgreen},
+%frame=tb,                         % Any extra options here
+%showstringspaces=false            % 
 }}
 
 
@@ -194,61 +209,72 @@ Esse trabalho visa demonstrar uma implementação para o problema de corte guilh
 		Segundo  \cite{cutint} o problema para cortes em peças limitadas pelo tamanho do objeto origianal e maior, realizando apenas cortes guilhotináveis e não estagiados, esse problema também é conhecido como  Problema de Corte Bidimensional Guilhotinado e Restrito.
 	
 
-	
+\subsection{Corte guilhotinado}
+\label{sub:corte_guilhotinado}
+
+Para gerar um corte guilhotinado utilizamos o seguinte método:
+
+\begin{python}
+    def __stupid_cut(self, x0, y0, x1, y1, pieces):
+        w, h = x1 - x0, y1 - y0
+        if len(pieces) > 0:
+            p, *tail = pieces
+            pw, ph = p
+            if pw <= w and ph <= h:
+                right_cuts, tail = self.__stupid_cut(x0+pw, y0, x1, y0 + ph, tail)
+                above_cuts, tail = self.__stupid_cut(x0, y0+ph, x1, y1, tail)
+                return ((x0, y0, pw, ph, 1, right_cuts, above_cuts), tail)
+        return (None, pieces)
+\end{python}
+
+O método de corte recebe uma area retangular e uma lista de peças a serem
+inseridas. Enquanto existem peças, ele seleciona a próxima peça e caso ela
+caiba no espaço destinado, é inserida. Caso contrário, o espaço fica vazio e a
+lista de peças é retornada.
+
+Caso a peça seja encaixada, uma tupla com a seguinte configuração por posição é retornada:
+
+\begin{enumerate}
+    \item Tupla:
+        \begin{enumerate}
+            \item x0: posição inferior no eixo X onde a peça foi inserida
+            \item y0: posição inferior no eixo y onde a peça foi inserida
+            \item pw: largura da peça
+            \item ph: altura da peça
+            \item q: quantidade de peças iguais repetidas (nesse artigo o valor é sempre 1, repetições só acontecem ao acaso)
+            \item right\_cuts: cortes à direita, gerados com chamada recursiva ao mesmo método
+            \item above\_cuts: corte acima, geradora com chamada recursiva ao mesmo método
+        \end{enumerate}
+    \item pieces: lista de peças não utilizadas na chamada
+\end{enumerate}
+
+A lista de peças não utilizadas é retornada para que as chamadas recursivas subsequentes não reutilizem peças indevidamente.
 
 \section*{Perturbação e Vizinhança}
 
-Following are a few things to keep in mind in coding equations,
-tables, and figures for submission to {\it Science}.
+Perturbarção é o termo utilizado para nomear o processor de modificar
+sutilmente uma candidata à solução em um algoritmo que utiliza meta-heuristica.
+Ao gerar uma perturbação, dizemos que a nova solução é vizinha de sua geradora.
 
-\paragraph*{In-line math.}  The utility that we use for converting
-from \LaTeX\ to HTML handles in-line math relatively well.  It is best
-to avoid using built-up fractions in in-line equations, and going for
-the more boring ``slash'' presentation whenever possible --- that is,
-for \verb+$a/b$+ (which comes out as $a/b$) rather than
-\verb+$\frac{a}{b}$+ (which compiles as $\frac{a}{b}$).  Likewise,
-HTML isn't tooled to handle certain overaccented special characters
-in-line; for $\hat{\alpha}$ (coded \verb+$\hat{\alpha}$+), for
-example, the HTML translation code will return [\^{}$(\alpha)$].
-Don't drive yourself crazy --- but if it's possible to avoid such
-constructs, please do so.  Please do not code arrays or matrices as
-in-line math; display them instead.  And please keep your coding as
-\TeX-y as possible --- avoid using specialized math macro packages
-like \texttt{amstex.sty}.
+O método que utilizamos para gerar perturbações para nossa \textit{Simulated Anealing} é o seguinte:
 
-\paragraph*{Displayed math.} Our HTML converter sets up \TeX\
-displayed equations using nested HTML tables.  That works well for an
-HTML presentation, but Word chokes when it comes across a nested
-table in an HTML file.  We surmount that problem by simply cutting the
-displayed equations out of the HTML before it's imported into Word,
-and then replacing them in the Word document using either images or
-equations generated by a Word equation editor.  Strictly speaking,
-this procedure doesn't bear on how you should prepare your manuscript
---- although, for reasons best consigned to a note \cite{nattex}, we'd
-prefer that you use native \TeX\ commands within displayed-math
-environments, rather than \LaTeX\ sub-environments.
+\begin{python}
+    def change(self, pieces):
+        change_index = random.randint(0, len(pieces)-1)
+        new = random.choice(self.rects)
+        pieces = pieces[:change_index] + [new] + pieces[change_index:]
+        return self.pieces(self.cut(pieces))
+\end{python}
 
-\paragraph*{Tables.}  The HTML converter that we use seems to handle
-reasonably well simple tables generated using the \LaTeX\
-\texttt{\{tabular\}} environment.  For very complicated tables, you
-may want to consider generating them in a word processing program and
-including them as a separate file.
+O método acima seleciona posição para inserir uma nova peça, modificando a sequencia original em $O(1)$. Este processo é seguido pela geração de um novo corte a partir da lista de peças com esta ligeira modificação.
 
-\paragraph*{Figures.}  Figure callouts within the text should not be
-in the form of \LaTeX\ references, but should simply be typed in ---
-that is, \verb+(Fig. 1)+ rather than \verb+\ref{fig1}+.  For the
-figures themselves, treatment can differ depending on whether the
-manuscript is an initial submission or a final revision for acceptance
-and publication.  For an initial submission and review copy, you can
-use the \LaTeX\ \verb+{figure}+ environment and the
-\verb+\includegraphics+ command to include your PostScript figures at
-the end of the compiled PostScript file.  For the final revision,
-however, the \verb+{figure}+ environment should {\it not\/} be used;
-instead, the figure captions themselves should be typed in as regular
-text at the end of the source file (an example is included here), and
-the figures should be uploaded separately according to the Art
-Department's instructions.
+Durante o processo de gerar o novo corte, podemos ter resultados bem diferentes mesmo com uma modificação tão sutil:
 
+\begin{itemize}
+    \item Caso a nova peça tenha altura inferior à peça deslocada, a linha à direita desta peça ficará vazia. Isto se dá pela forma que o método gerador de corte trabalha, caso ele não consiga inserir a peça na mesma linha, ele abre uma nova linha acima, deixando espaço vago no restante da linha, caso haja;
+    \item Caso a peça adicionada seja maior que sua predecessora, o citado também acontece, só que agora à partir da nova peça inserida;
+    \item Existe a possibilidade de uma peça ser inserida nesses espaços vazios, uma grande quantidade de perturbações pode garantir que tal cenário ocorra.
+\end{itemize}
 
 \section*{Meta-Heurística \textit{Simulated Anealing}}
 
@@ -310,7 +336,7 @@ O algoritmo encontra sua condição de parada se a temperatura chegar próxima a
 
 \section*{Execução dos Testes}
 \include{table}
-	\include{results}
+\include{results}
 
 \bibliography{scibib}
 

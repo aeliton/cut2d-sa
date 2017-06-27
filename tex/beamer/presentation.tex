@@ -4,6 +4,7 @@
 \usepackage[T1]{fontenc}    % codificacao de fontes
 \usepackage[brazil]{babel}  % idioma
 
+\usepackage{movie15}
 
 \usetheme{Berlin}         % tema
 \usecolortheme{seahorse}      % cores
@@ -75,8 +76,72 @@
 %\tableofcontents
 %\end{frame}
 
-\begin{frame}{•}
+\begin{frame}
+	\frametitle{Simulated Annealing}
+	
+		\begin{columns}
+		\begin{column}{0.5\textwidth}
+		   \begin{itemize}
+		   		\item Técnica probabilistica x Espaço de busca
+				\item Minimos Locais x Minimo Global
+				\item Função objetiva
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.5\textwidth}  %%<--- here
+    		\begin{figure}[h]
+	   	 		\includegraphics[width=7.5cm]{imagens/sa}
+			    \caption{Mínimos}
+	  		\end{figure}
+		\end{column}
+	\end{columns}
+\end{frame}
 
+\begin{frame}
+	\frametitle{Resultados do S.A}
+	
+		\begin{columns}
+		\begin{column}{0.5\textwidth}
+		   \begin{itemize}
+		   		\item Pertubação
+				\item Vizinhança
+				\item Interações
+				\item Fator de Boltzmann
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.5\textwidth}  %%<--- here
+    		\begin{figure}[h]
+	   	 		\includegraphics[width=7cm, height=4.8cm]{imagens/plot}
+			    \caption{Função de custo x Temperatura}
+	  		\end{figure}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Resultados do corte guilhotinado}
+	
+		\begin{columns}
+		\begin{column}{0.5\textwidth}
+		   \begin{itemize}
+		   		\item Repetição
+				\item Solução inicial
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.5\textwidth}  %%<--- here
+    		\begin{figure}[h]
+	   	 		\includegraphics[width=7cm, height=4.8cm]{imagens/cut}
+			    \caption{Função de custo x Temperatura}
+	  		\end{figure}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\begin{frame}
+Dúvidas?
+\end{frame}
+
+\begin{frame}
+Obrigado
 \end{frame}
 
 \end{document}

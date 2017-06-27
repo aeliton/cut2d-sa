@@ -187,11 +187,13 @@ Esse trabalho visa demonstrar uma implementação para o problema de corte guilh
 	
 	\begin{figure}[h]
     \centering
-    \includegraphics[width=15cm, height=5cm]{imagens/guilhotine}
+    \includegraphics[width=15cm, height=5cm]{imagens/guilhotine2}
     \caption{Exemplos de cortes}
   \end{figure}
 	
-	O problema abordado nesse trabalho é para cortes em peças limitadas pelo tamanho do objeto origianal e maior, realizando apenas cortes guilhotináveis e não estagiados, esse problema também é conhecido como  Problema de Corte Bidimensional Guilhotinado e Restrito.
+		Segundo   O problema para cortes em peças limitadas pelo tamanho do objeto origianal e maior, realizando apenas cortes guilhotináveis e não estagiados, esse problema também é conhecido como  Problema de Corte Bidimensional Guilhotinado e Restrito.
+	
+
 	
 
 \section*{Perturbação e Vizinhança}
@@ -253,9 +255,9 @@ Department's instructions.
 A meta heuristica Simulated Annealing (S.A) é uma técnica oriunda de uma analogia com a termodinamica para obter estados de baixas energias em um sólido. Como meta heuristica, ela é utilizada em problemas de otimização de busca local com probabilidade. 
 Inicialmente o S.A a busca a partir de um indice qualquer, iniciando um laço em que cada interação procura um candidato seguinte para um ponto minimo na vinzinhança do atual candidato. Essa forma é dada pela seguinte diferença entre as funções objetivas:
 
-$ {\triangle = f (sˆ1) - f(s) }$
+$ {\triangle = f (s^1) - f(s) }$
 
-Logo se $ {\triangle < 0 }$, houve uma diminuição na função objetiva e $ sˆ1$ é considerava como nova solução. Caso $ {\triangle = 0 }$ ou $ {\triangle > 0 }$ houve um aumento ou estabilidade da energia e a aceitação dessa solução será feita sobre um fator estatistico onde é mais provável para autas temperaturas e menos provável para menores. O fator utilizado é conhecido como fator de Boltzmann, dado por: $ {e^{(\triangle / T)} }$ onde T é a temperatura que regula a aceitação da solução de pior custo.
+Logo se $ {\triangle < 0 }$, houve uma diminuição na função objetiva e $ s^1$ é considerava como nova solução. Caso $ {\triangle = 0 }$ ou $ {\triangle > 0 }$ houve um aumento ou estabilidade da energia e a aceitação dessa solução será feita sobre um fator estatistico onde é mais provável para autas temperaturas e menos provável para menores. O fator utilizado é conhecido como fator de Boltzmann, dado por: $ {e^{(\triangle / T)} }$ onde T é a temperatura que regula a aceitação da solução de pior custo.
 
 Essa implementação é vista no código fonte em:
 

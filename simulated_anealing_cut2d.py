@@ -54,7 +54,7 @@ class SimulatedAnnealing:
         l = list(diffs)
         return SECRET * (sum(l) / len(l))
 
-    def execute(self, start, painter_callback):
+    def execute(self, start):
         solution = start
         temperature = self.__initial_temperature(solution)
         success_iterator = 0
@@ -72,11 +72,11 @@ class SimulatedAnnealing:
                     if diff_s >= 0 or math.exp(-diff_s / temperature) > uniform(0, 1):
                         solution = new_solution
                         success_iterator = success_iterator + 1
-                        # painter_callback(self.__cost(solution), temperature)
+
                 except:
                     pass
 
-                if success_iterator >= self.MAX_SUCESS:  # equilibrium
+                if success_iterator >= self.MAX_SUCESS:
                     break
 
             solutions.insert(j, self.__cost(solution))
@@ -84,8 +84,6 @@ class SimulatedAnnealing:
                 no_change_counter += 1
             else:
                 no_change_counter = 0
-
-            # print("%d %f %d %d" % (j, temperature, self.__cost(solution), no_change_counter))
 
             temperatures.append(temperature)
             costs.append(self.__cost(solution))

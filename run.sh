@@ -5,6 +5,7 @@ mkdir -p results
 rm -rf tex/article/results.tex
 echo "
 \\begin{center}
+    \\resizebox{\textwidth}{!}{%
     \\begin{tabular}{ |c|c|c|c|c|c|c|c|c|}
     \\hline
         \\# & Instancia & \\# de Itens & Tam. Placa & S. Inicial & S. Média & S. Melhor & Desperdício & Tempo (s) \\\\ \\hline
@@ -29,12 +30,13 @@ for file in $(ls input/* | sed 's/input\///;s/.txt$//'); do
             AVERAGE=$(echo $DATA| cut -d' ' -f 5)
             BEST=$(echo $DATA| cut -d' ' -f 6)
             TIME=$(echo $DATA| cut -d' ' -f 7)
+            PIECES=$(echo $DATA| sed 's/.*\({.*}\)/\1/')
             echo $PERCENT
             if [ "$(echo $PERCENT'<'$LOW | bc -l)" -eq "1" ]; then
                 ITERATION=$i
                 LOW=$PERCENT
                 LOW_DATA="Solução: $BEST, disperdício de $PERCENT\% de $AREA"
-                TABLE="$COUNT & $file & $N & $AREA & $INITIAL & $AVERAGE & $BEST & $PERCENT & $TIME \\\\ \\hline"
+                TABLE="        $COUNT & $file & $N & $AREA & $INITIAL & $AVERAGE & $BEST & $PERCENT & $TIME \\\\ \\hline"
             fi
         popd
     done
@@ -53,7 +55,7 @@ echo "
   \\includegraphics[width=1\\linewidth]{results/$file/$ITERATION/cut}
   \\label{fig:sub2}
 \\end{subfigure}
-\\caption{Instancia $file.txt, $LOW_DATA}
+\\caption{Instancia $file.txt, $LOW_DATA, $PIECES}
 \\label{fig:test}
 \\end{figure}
 " >> tex/article/results.tex
@@ -63,6 +65,6 @@ rm -rf tex/article/results
 mv results tex/article/results
 
 echo "
-    \end{tabular}
+    \end{tabular}}
 \end{center}
 " >> tex/article/table.tex

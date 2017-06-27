@@ -33,4 +33,4 @@ gui.end()
 
 p.draw(costs, temperatures, plot_file_path)
 
-print("%.2f\\%% %d %s %d %d %d %f" % stats)
+print("%.2f\\%% %d %s %d %d %d %f %s" % stats)

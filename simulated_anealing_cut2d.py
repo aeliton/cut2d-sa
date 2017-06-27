@@ -2,6 +2,7 @@ import math
 from random import uniform, choice
 from guillotine import Guillotine
 import time
+from collections import Counter
 
 
 class SimulatedAnnealing:
@@ -101,4 +102,4 @@ class SimulatedAnnealing:
 
             average = sum(solutions)/len(solution)
 
-        return temperatures, costs, solution, (self.__waste(solution), len(self.rects), "{0}x{1}".format(self.w, self.h), self.__cost(start), average, self.__cost(solution), time.time() - t0)
+        return temperatures, costs, solution, (self.__waste(solution), len(self.rects), "{0}x{1}".format(self.w, self.h), self.__cost(start), average, self.__cost(solution), time.time() - t0, "{0}".format(dict(Counter(solution))))

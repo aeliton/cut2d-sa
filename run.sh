@@ -5,12 +5,21 @@ mkdir -p results
 rm -rf tex/article/results.tex
 
 for file in $(ls input/* | sed 's/input\///;s/.txt$//'); do
+    ITERATION=0
+    LOW=100
     FOLDER="results/$file"
     rm -rf $FOLDER
     for i in 1 2 3; do
         mkdir -p $FOLDER/$i
         pushd "${FOLDER}/${i}"
-            ../../../cut2d.py < ../../../input/"${file}.txt"
+            DATA=$(../../../cut2d.py < ../../../input/"${file}.txt")
+            PERCENT=$(echo $DATA| sed 's/\\.*//')
+            echo $PERCENT
+            if [ "$(echo $PERCENT'<'$LOW | bc -l)" -eq "1" ]; then
+                ITERATION=$i
+                LOW=$PERCENT
+                LOW_DATA=$DATA
+            fi
         popd
     done
 
@@ -19,15 +28,15 @@ echo "
 \\centering
 \\begin{subfigure}{.5\\textwidth}
   \\centering
-  \\includegraphics[width=1\\linewidth]{results/$file/1/plot}
+  \\includegraphics[width=1\\linewidth]{results/$file/$ITERATION/plot}
   \\label{fig:sub1}
 \\end{subfigure}%
 \\begin{subfigure}{.5\\textwidth}
   \\centering
-  \\includegraphics[width=1\\linewidth]{results/$file/1/cut}
+  \\includegraphics[width=1\\linewidth]{results/$file/$ITERATION/cut}
   \\label{fig:sub2}
 \\end{subfigure}
-\\caption{Instancia $file.txt, x\%}
+\\caption{Instancia $file.txt, $LOW_DATA}
 \\label{fig:test}
 \\end{figure}
 " >> tex/article/results.tex

@@ -21,8 +21,9 @@ g = Guillotine((W, H), rects)
 p = Painter()
 s = SimulatedAnnealing(W, H, rects)
 initial = s.initial_solution()
-costs, temperatures, solution = SimulatedAnnealing.execute(s, initial, p.update_line)
+costs, temperatures, solution, stats = SimulatedAnnealing.execute(s, initial)
 
+#stats: (self.__waste(solution), len(self.rects), WxH, self.__cost(start), average, self.__cost(solution))
 cut = g.cut(solution)
 
 gui = PainterGui(W, H)
@@ -32,4 +33,4 @@ gui.end()
 
 p.draw(costs, temperatures, plot_file_path)
 
-print("%.2f\\%% de %dx%d (%d)" % (100*(((W*H) - gui.area(cut))/(W*H)), W, H, W*H))
+print("%.2f\\%% %d %s %d %d %d %f" % stats)

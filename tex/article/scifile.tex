@@ -57,16 +57,6 @@
   breaklines=true,
   breakatwhitespace=true,
   tabsize=3
-%language=Python,
-%%basicstyle=\ttm,
-%basicstyle={\scriptsize\ttfamily},
-%otherkeywords={self},             % Add keywords here
-%keywordstyle=\ttb\color{deepblue},
-%emph={MyClass,__init__},          % Custom highlighting
-%emphstyle=\ttb\color{deepred},    % Custom highlighting style
-%stringstyle=\color{deepgreen},
-%frame=tb,                         % Any extra options here
-%showstringspaces=false            % 
 }}
 
 
@@ -273,8 +263,10 @@ Durante o processo de gerar o novo corte, podemos ter resultados bem diferentes 
 \begin{itemize}
     \item Caso a nova peça tenha altura inferior à peça deslocada, a linha à direita desta peça ficará vazia. Isto se dá pela forma que o método gerador de corte trabalha, caso ele não consiga inserir a peça na mesma linha, ele abre uma nova linha acima, deixando espaço vago no restante da linha, caso haja;
     \item Caso a peça adicionada seja maior que sua predecessora, o citado também acontece, só que agora à partir da nova peça inserida;
-    \item Existe a possibilidade de uma peça ser inserida nesses espaços vazios, uma grande quantidade de perturbações pode garantir que tal cenário ocorra.
+    \item Existe a possibilidade de uma peça ser inserida nesses espaços vazios, uma grande quantidade de perturbações pode garantir que tal cenário ocorra;
 \end{itemize}
+
+    Como o método change só insere elementos à princípio, o seu retorno é fruto de uma formação de corte, fazendo com que peças sejam descartadas caso não haja mais espaço para a próxima peça. Depois de se determinar o corte as peças são estraídas e retornadas.
 
 \section*{Meta-Heurística \textit{Simulated Anealing}}
 

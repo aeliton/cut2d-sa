@@ -4,13 +4,13 @@ import pygame
 
 
 class PainterGui:
-    def __init__(self):
+    def __init__(self, w, h):
         self.white = (255, 255, 255)
         self.black = (0, 0, 0)
         self.gray = (211, 211, 211)
 
-        self.H = 100
-        self.W = 100
+        self.H = w
+        self.W = h
 
         pygame.init()
         self.font = pygame.font.SysFont('Arial', 11)

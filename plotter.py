@@ -43,7 +43,7 @@ class Painter:
 
         plt.show()
 
-    def draw(self, costs, temperatures):
+    def draw(self, costs, temperatures, file_path):
         # Scatter plot on top of lines
         plt.figure(1)
 
@@ -60,4 +60,7 @@ class Painter:
         plt.tight_layout(h_pad=2)
         plt.title('Costs')
 
-        plt.show()
+        #plt.show()
+        plt.savefig(file_path)
+
+

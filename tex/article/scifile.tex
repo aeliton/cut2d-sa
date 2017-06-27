@@ -13,7 +13,11 @@
 % reference calls and reference-list numbers.
 
 \usepackage{scicite}
-
+\usepackage[pdftex]{graphicx}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
 % Use times if you have the font installed; otherwise, comment out the
 % following line.
 
@@ -149,88 +153,6 @@ Esse trabalho visa demonstrar uma implementação para o problema de corte guilh
 	O problema abordado nesse trabalho é para cortes em peças limitadas pelo tamanho do objeto origianal e maior, realizando apenas cortes guilhotináveis e não estagiados, esse problema também é conhecido como  Problema de Corte Bidimensional Guilhotinado e Restrito.
 	
 
-
-\begin{quote}
-\begin{verbatim}
-However, this record of the solar nebula may have been
-partly erased by the complex history of the meteorite
-parent bodies, which includes collision-induced shock,
-thermal metamorphism, and aqueous alteration
-({\it 1, 2, 5--7\/}).
-\end{verbatim}
-\end{quote}
-
-
-\noindent Compiled, the last two lines of the code above, of course, would give notecalls in {\it Science\/} style:
-
-\begin{quote}
-\ldots thermal metamorphism, and aqueous alteration ({\it 1, 2, 5--7\/}).
-\end{quote}
-
-Under the same logic, the author could set up his or her reference list as a simple enumeration,
-
-\begin{quote}
-\begin{verbatim}
-{\bf References and Notes}
-
-\begin{enumerate}
-\item G. Gamow, {\it The Constitution of Atomic Nuclei
-and Radioactivity\/} (Oxford Univ. Press, New York, 1931).
-\item W. Heisenberg and W. Pauli, {\it Zeitschr.\ f.\ 
-Physik\/} {\bf 56}, 1 (1929).
-\end{enumerate}
-\end{verbatim}
-\end{quote}
-
-\noindent yielding
-
-\begin{quote}
-{\bf References and Notes}
-
-\begin{enumerate}
-\item G. Gamow, {\it The Constitution of Atomic Nuclei and
-Radioactivity\/} (Oxford Univ. Press, New York, 1931).
-\item W. Heisenberg and W. Pauli, {\it Zeitschr.\ f.\ Physik} {\bf 56},
-1 (1929).
-\end{enumerate}
-\end{quote}
-
-That's not a solution that's likely to appeal to everyone, however ---
-especially not to users of B{\small{IB}}\TeX\ \cite{inclme}.  If you
-are a B{\small{IB}}\TeX\ user, we suggest that you use the
-\texttt{Science.bst} bibliography style file and the
-\texttt{scicite.sty} package, both of which we are downloadable from our author help site
-(http://www.sciencemag.org/about/authors/prep/TeX\_help/).  You can also
-generate your reference lists by using the list environment
-\texttt{\{thebibliography\}} at the end of your source document; here
-again, you may find the \texttt{scicite.sty} file useful.
-
-Whether you use B{\small{IB}}\TeX\ or \texttt{\{thebibliography\}}, be
-very careful about how you set up your in-text reference calls and
-notecalls.  In particular, observe the following requirements:
-
-\begin{enumerate}
-\item Please follow the style for references outlined at our author
-  help site and embodied in recent issues of {\it Science}.  Each
-  citation number should refer to a single reference; please do not
-  concatenate several references under a single number.
-\item Please cite your references and notes in text {\it only\/} using
-  the standard \LaTeX\ \verb+\cite+ command, not another command
-  driven by outside macros.
-\item Please separate multiple citations within a single \verb+\cite+
-  command using commas only; there should be {\it no space\/}
-  between reference keynames.  That is, if you are citing two
-  papers whose bibliography keys are \texttt{keyname1} and
-  \texttt{keyname2}, the in-text cite should read
-  \verb+\cite{keyname1,keyname2}+, {\it not\/}
-  \verb+\cite{keyname1, keyname2}+.
-\end{enumerate}
-
-\noindent Failure to follow these guidelines could lead
-to the omission of the references in an accepted paper when the source
-file is translated to Word via HTML.
-
-
 \section*{Perturbação e Vizinhança}
 
 Following are a few things to keep in mind in coding equations,
@@ -286,6 +208,13 @@ Department's instructions.
 
 
 \section*{Meta-Heurística \textit{Simulated Anealing}}
+
+A meta heuristica Simulated Annealing (S.A) é uma técnica oriunda de uma analogia com a termodinamica para obter estados de baixas energias em um sólido. Como meta heuristica, ela é utilizada em problemas de otimização de busca local com probabilidade. 
+Inicialmente o S.A a busca a partir de um indice qualquer, iniciando um laço em que cada interação procura um candidato seguinte para um ponto minimo na vinzinhança do atual candidato. Essa forma é dada pela seguinte diferença entre as funções objetivas:
+
+$ {\triangle = f (sˆ1) - f(s) }$
+
+Logo se $ {\triangle < 0 }$, houve uma diminuição na função objetiva e $ sˆ1$ é considerava como nova solução. Caso $ {\triangle = 0 }$ ou $ {\triangle > 0 }$ houve um aumento ou estabilidade da energia e a aceitação dessa solução será feita sobre um fator estatistico onde é mais provável para autas temperaturas e menos provável para menores. O fator utilizado é conhecido como fator de Boltzmann, dado por: $ {e^{(\triangle / T)} }$ onde T é a temperatura que regula a aceitação da solução de pior custo.
 
 What you should send to {\it Science\/} will depend on the stage your manuscript is in:
 
